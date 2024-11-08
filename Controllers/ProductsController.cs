@@ -13,6 +13,21 @@ namespace RestAPIPro.Controllers
             new Product { Id = 2, Name = "Smartphone", Price = 699.99M }
         };
 
+         // OPTIONS: api/products
+        [HttpOptions]
+        public IActionResult Options()
+        {
+            // Detailed response for the OPTIONS request
+            Response.Headers.Add("Allow", "GET, POST, PUT, DELETE, OPTIONS");
+
+            // Adding more detailed information to the response header
+            Response.Headers.Add("X-Allow-Methods", "GET - Retrieves all products; POST - Adds a new product; PUT - Updates a product; DELETE - Removes a product");
+            Response.Headers.Add("X-Description", "This endpoint allows basic CRUD operations on products. The allowed methods are: GET, POST, PUT, DELETE.");
+
+            // Returning a 200 OK with no content, just headers describing allowed methods.
+            return Ok();
+        }
+
         // GET: api/products
         [HttpGet]
         public ActionResult<IEnumerable<Product>> GetProducts()
